@@ -10,6 +10,7 @@ class Ev
   def self.evaluate(file)
 
     @@img = Magick::Image::read(file).first
+    print " Geometry: #{@@img.columns}x#{@@img.rows} "
     err = 0
 
     for y in 0..23
@@ -50,6 +51,7 @@ for file in folder
   result[file] = err
 
   rescue RangeError => e
+    print " -> Error\n"
   end
 end
 
@@ -58,3 +60,4 @@ sresult = result.sort_by {|k, v| v}.to_h
 sresult.each {|k,v|
   bfile.print "#{k}, #{v}\n"
 }
+

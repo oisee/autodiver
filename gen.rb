@@ -19,7 +19,7 @@ dirname = "./evaluate"
 unless File.directory?(dirname)
   FileUtils.mkdir_p(dirname)
 end
-out_prefix = "#{dirname}/out"
+out_prefix = "#{dirname}/#{File.basename(in_file)}"
 out_ext    = ".png"
 
 command_file = Gem.win_platform? ? "./run.bat" : "./run.sh"

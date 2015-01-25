@@ -5,6 +5,11 @@ require 'RMagick'
 
 folder = Dir["./evaluate/*.png"]
 
+dir_best = "./best"
+unless File.directory?(dir_best)
+  FileUtils.mkdir_p(dir_best)
+end
+
 class Ev
 
   def self.evaluate(file)
@@ -40,24 +45,35 @@ best_file = "./best.csv"
 File.delete(best_file) if File.exist?(best_file)
 bfile = File.open(best_file,"w")
 
-result = Hash.new
-for file in folder
+result = {}
+folder.each{|file|
   print "#{file}"
   begin
-  err = Ev.evaluate(file)
+    err = Ev.evaluate(file)
 
-  print ", #{err}\n"
-  rfile.print "#{file}, #{err}\n"
-  result[file] = err
+    print ", #{err}\n"
+    rfile.print "#{file}, #{err}\n"
+    result[file] = err
 
   rescue RangeError => e
     print " -> Error\n"
   end
-end
+}
 
 sresult = result.sort_by {|k, v| v}.to_h
 
+best = {}
+worst = {}
 sresult.each {|k,v|
+  if best.count <=3
+    best[k]=v
+  end
+  worst[:path] = k
+  worst[:penalty] = v
   bfile.print "#{k}, #{v}\n"
 }
-
+print "Best: \n\n"
+best.each{|k,v|
+  print "#{k} #{v}"
+  FileUtils.copy(k,"./best/#{File.basename(k)}")
+}

@@ -15,11 +15,15 @@ scale_from = (256)
 scale_to   = (256+scale_all)
 offset_range = offset == 1 ? -3..4 : 0..0
 
-dirname = "./evaluate"
-unless File.directory?(dirname)
-  FileUtils.mkdir_p(dirname)
+dir_evaluate = "./evaluate"
+unless File.directory?(dir_evaluate)
+  FileUtils.mkdir_p(dir_evaluate)
 end
-out_prefix = "#{dirname}/#{File.basename(in_file)}"
+dir_best = "./best"
+unless File.directory?(dir_best)
+    FileUtils.mkdir_p(dir_best)
+end
+out_prefix = "#{dir_evaluate}/#{File.basename(in_file)}"
 out_ext    = ".png"
 
 command_file = Gem.win_platform? ? "./run.bat" : "./run.sh"

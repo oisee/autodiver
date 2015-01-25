@@ -45,8 +45,8 @@ for rot in (rot_from..rot_to).step(step_rot)
         out_file =  "#{out_prefix}_r#{rot}_s#{scale}_x#{offx}_y#{offy}#{out_ext}"
         #print "         #{out_file}\n"
 
-        #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} #{out_file}\n"
-        file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} +dither -colors 8 #{out_file}\n"
+        file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} #{out_file}\n"
+        #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} +dither -colors 8 #{out_file}\n"
         #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -posterize 3 #{out_file}\n"
 
       end

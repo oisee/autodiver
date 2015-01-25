@@ -12,10 +12,10 @@ end
 
 class Ev
 
-  def self.evaluate(file)
+  def evaluate(file)
 
-    @@img = Magick::Image::read(file).first
-    print " Geometry: #{@@img.columns}x#{@@img.rows} "
+    @img = Magick::Image::read(file).first
+    print " Geometry: #{@img.columns}x#{@img.rows} "
     err = 0
 
     for y in 0..23
@@ -25,8 +25,8 @@ class Ev
     end
     return err
   end
-  def self.cell(px,py)
-    cell = @@img.get_pixels(px,py,8,8)
+  def cell(px,py)
+    cell = @img.get_pixels(px,py,8,8)
     rcell = cell.reduce(Hash.new(0)) {|a,b| a[b] += 1;a}
     #print "#{rcell.inspect}\n"
     acell = rcell.values.sort.reverse[2,64]
@@ -37,25 +37,27 @@ class Ev
   end
 end
 
-result_file = "./result.csv"
+result_file = "#{dir_best}/result.csv"
 File.delete(result_file) if File.exist?(result_file)
 rfile = File.open(result_file,"w")
 
-best_file = "./best.csv"
+best_file = "#{dir_best}/best.csv"
 File.delete(best_file) if File.exist?(best_file)
 bfile = File.open(best_file,"w")
+
+e = Ev.new()
 
 result = {}
 folder.each{|file|
   print "#{file}"
   begin
-    err = Ev.evaluate(file)
+    err = e.evaluate(file)
 
     print ", #{err}\n"
     rfile.print "#{file}, #{err}\n"
     result[file] = err
 
-  rescue RangeError => e
+  rescue RangeError => ex
     print " -> Error\n"
   end
 }
@@ -73,7 +75,12 @@ sresult.each {|k,v|
   bfile.print "#{k}, #{v}\n"
 }
 print "Best: \n\n"
+i = 0
 best.each{|k,v|
-  print "#{k} #{v}"
-  FileUtils.copy(k,"./best/#{File.basename(k)}")
+  i = i + 1
+  print "#{k} #{v}\n"
+  FileUtils.copy(k,"./best/best_#{i}#{File.basename(k)}")
 }
+print "Worst: #{worst[:path]} #{worst[:penalty]}\n"
+
+FileUtils.copy(worst[:path],"./best/worst_#{File.basename(worst[:path])}")

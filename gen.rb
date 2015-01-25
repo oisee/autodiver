@@ -11,8 +11,8 @@ offset     = ARGV[5].to_i || 1
 rot_from = -(rot_all / 2.0).round
 rot_to   = (rot_all / 2).round
 
-scale_from = (256-(scale_all/2))
-scale_to   = (256+(scale_all/2))
+scale_from = (256)
+scale_to   = (256+scale_all)
 offset_range = offset == 1 ? -3..4 : 0..0
 
 dirname = "./evaluate"
@@ -28,9 +28,9 @@ file = File.open(command_file,"w")
 
 print "#{in_file}\n"
 
-for rot in rot_from..rot_to
+for rot in (rot_from..rot_to).step(step_rot)
   print "rotate #{rot}\n"
-  for scale in scale_from..scale_to
+  for scale in (scale_from..scale_to).step(step_scale)
     print "    scale #{scale}\n"
     for offy in offset_range
       for offx in offset_range
@@ -41,7 +41,10 @@ for rot in rot_from..rot_to
         out_file =  "#{out_prefix}_r#{rot}_s#{scale}_x#{offx}_y#{offy}#{out_ext}"
         #print "         #{out_file}\n"
 
-        file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} -crop 256x192#{tox}#{toy} #{out_file}\n"
+        #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} #{out_file}\n"
+        #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} +dither -colors 8 #{out_file}\n"
+        file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -posterize 3 #{out_file}\n"
+
       end
     end
   end

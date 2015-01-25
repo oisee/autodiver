@@ -22,7 +22,7 @@ end
 out_prefix = "#{dirname}/out"
 out_ext    = ".png"
 
-command_file = "./run.sh"
+command_file = Gem.win_platform? ? "./run.bat" : "./run.sh"
 File.delete(command_file) if File.exist?(command_file)
 file = File.open(command_file,"w")
 

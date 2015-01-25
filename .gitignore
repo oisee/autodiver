@@ -1,6 +1,6 @@
-evaluate/
+evaluate
 evaluate/*
-.idea/
+.idea
 .idea/*
 run.sh
 run.bat

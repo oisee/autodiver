@@ -3,8 +3,8 @@ require 'fileutils'
 
 in_file    = ARGV[0]
 rot_all    = ARGV[1].to_i
-scale_all  = ARGV[2].to_i
-step_rot   = ARGV[3].to_i || 1
+step_rot   = ARGV[2].to_i || 1
+scale_all  = ARGV[3].to_i
 step_scale = ARGV[4].to_i || 1
 offset     = ARGV[5].to_i || 1
 
@@ -41,9 +41,9 @@ for rot in (rot_from..rot_to).step(step_rot)
         out_file =  "#{out_prefix}_r#{rot}_s#{scale}_x#{offx}_y#{offy}#{out_ext}"
         #print "         #{out_file}\n"
 
-        #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} #{out_file}\n"
+        file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} #{out_file}\n"
         #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} +dither -colors 8 #{out_file}\n"
-        file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -posterize 3 #{out_file}\n"
+        #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -posterize 3 #{out_file}\n"
 
       end
     end

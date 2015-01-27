@@ -1,10 +1,7 @@
-
 require 'fileutils'
 require 'RMagick'
-#gem 'RMagick'
 
 folder = Dir["./evaluate/*.png"]
-
 dir_best = "./best"
 unless File.directory?(dir_best)
   FileUtils.mkdir_p(dir_best)

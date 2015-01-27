@@ -1,5 +1,17 @@
+
 require 'fileutils'
 require 'RMagick'
+
+@img = Magick::Image::read("./herm_p2.png").first
+@mask = Magick::Image::read("./mask_herm_p2.png").first
+
+print "#{@mask.inspect}"
+
+@masked = @img.mask(@mask )
+
+@masked.write("./masked_herm_p2.png")
+
+exit
 
 folder = Dir["./evaluate/*.png"]
 dir_best = "./best"
@@ -20,16 +32,18 @@ class Ev
 
     if File.exist?(in_maskpath) then
       @mask = Magick::Image::read(in_maskpath).first
+      print " Mask: #{@mask.columns}x#{@mask.rows} ,"
     end
 
-    print " Image: #{@img.columns}x#{@img.rows} / Mask: #{@mask.columns}x#{@mask.rows} ,"
-
+    @img.mask(@mask)
+    @img.write("#{in_dir}/#{in_filename}masked.png")
+    print " Image: #{@img.columns}x#{@img.rows} "
 
     err = 0
 
     for y in 0..23
       for x in 0..31
-       err = err + cell(x*8, y*8)
+        err = err + cell(x*8, y*8)
       end
     end
     return err

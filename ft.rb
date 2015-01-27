@@ -2,8 +2,14 @@
 require 'fileutils'
 require 'RMagick'
 
+include Magick
+
+p ENV["PATH"]
+
 @img = Magick::Image::read("./herm_p2.png").first
 @mask = Magick::Image::read("./mask_herm_p2.png").first
+
+@img.mask()
 
 print "#{@mask.inspect}"
 

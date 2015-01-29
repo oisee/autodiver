@@ -1,5 +1,7 @@
-evaluate
-evaluate/*
+eval
+eval/*
+eval_mask
+eval_mask/*
 best
 best/*
 .idea

@@ -9,8 +9,7 @@ p ENV["PATH"]
 @img = Magick::Image::read("./herm_p2.png").first
 @mask = Magick::Image::read("./mask_herm_p2.png").first
 
-@img.mask()
-
+print "#{@mask.alpha?}"
 print "#{@mask.inspect}"
 
 @masked = @img.mask(@mask )

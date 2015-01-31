@@ -1,11 +1,14 @@
-evaluate
-evaluate/*
+eval
+eval/*
+eval_mask
+eval_mask/*
 best
 best/*
 .idea
 .idea/*
 run.sh
 run.bat
+*.gif
 *.png
 *.jpg
 *.jpeg

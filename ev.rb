@@ -14,8 +14,6 @@ class Ev
     @white =  Magick::Pixel.new(255,255,255)
   end
   def eval_image(file)
-
-
     img = Magick::Image::read(file).first
     print " Image: #{img.columns}x#{img.rows} "
     err = 0
@@ -29,10 +27,8 @@ class Ev
   def eval_cell(img,px,py)
     cell = img.get_pixels(px,py,8,8)
     rcell = cell.reduce(Hash.new(0)) {|a,b| a[b] += 1;a}
-    #print "#{rcell.inspect}\n"
     acell = rcell.values.sort.reverse[2,64]
     bcell = acell != nil ? acell : [0]
-    #print "#{acell.inspect} => #{bcell.inspect}\n"
     err = bcell.inject(0, &:+)
   end
 
@@ -57,17 +53,15 @@ class Ev
     cell_mask = mask.get_pixels(px,py,8,8)
     rcell_mask = cell_mask.reduce(Hash.new(0)) {|a,b| a[b] += 1;a}
     colors = rcell_mask.keys.count
-
     if (colors == 1) and (cell_mask[0] == @black ) then
       return 0
     end
     cell = img.get_pixels(px,py,8,8)
     rcell = cell.reduce(Hash.new(0)) {|a,b| a[b] += 1;a}
 
-    #print "#{rcell.inspect}\n"
     acell = rcell.values.sort.reverse[2,64]
     bcell = acell != nil ? acell : [0]
-    #print "#{acell.inspect} => #{bcell.inspect}\n"
+
     err = bcell.inject(0, &:+)
   end
 end

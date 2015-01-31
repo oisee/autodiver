@@ -105,7 +105,7 @@ sresult = result.sort_by {|k, v| v}.to_h
 best = {}
 worst = {}
 sresult.each {|k,v|
-  if best.count <=3
+  if best.count <=7
     best[k]=v
   end
   worst[:path] = k

@@ -8,6 +8,7 @@ best/*
 .idea/*
 run.sh
 run.bat
+*.gif
 *.png
 *.jpg
 *.jpeg

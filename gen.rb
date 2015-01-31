@@ -64,14 +64,15 @@ for rot in (rot_from..rot_to).step(step_rot)
         #print "         #{out_file}\n"
         #--------------------------------------------------------
         # in_file manipulation
-        file.print "convert #{in_filepath} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -gravity forget -extent 256x192#{tox}#{toy} #{out_file}\n"
+        file.print "convert #{in_filepath} -gravity center  -filter point -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -gravity forget -extent 256x192#{tox}#{toy} #{out_file}\n"
+        #file.print "convert #{in_filepath} -gravity center  -scale #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -gravity forget -extent 256x192#{tox}#{toy} #{out_file}\n"		
         #file.print "convert #{in_filepath} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} #{out_file}c.png\n"
         #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} +dither -colors 8 #{out_file}\n"
         #file.print "convert #{in_file} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -posterize 3 #{out_file}\n"
         #--------------------------------------------------------
         # in_mask manipulation
         if mask != 0 then
-          file.print "convert -background Black #{in_maskpath} -gravity center -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -gravity forget -extent 256x192#{tox}#{toy} #{out_mask}\n"
+          file.print "convert -background Black #{in_maskpath} -gravity center -filter point -resize #{resize} -rotate #{rot} +repage -crop 256x192#{tox}#{toy} -gravity forget -extent 256x192#{tox}#{toy} #{out_mask}\n"
         end
       end
     end
